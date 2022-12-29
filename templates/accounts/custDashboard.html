@@ -1,0 +1,6 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<h4>Hola! {{ user.username }} You're logged in.</h4>
+{% include 'includes/alerts.html' %}
+{% endblock content %}
