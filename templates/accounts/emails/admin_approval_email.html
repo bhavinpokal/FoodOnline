@@ -1,0 +1,11 @@
+{% autoescape off %}
+
+Hi {{ user.first_name }},
+{% if is_approved %}
+    <p>Congratulations! You are approved and now you can list your restaurant on FoodBakery.</p>
+{% else %}
+    <p>We are sorry. You are not eligible to list your restaurant at this moment.</p>
+    <p>For more details, please contact support@foodbakery.com</p>
+{% endif %}
+
+{% endautoescape %}

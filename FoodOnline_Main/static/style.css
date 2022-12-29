@@ -1194,7 +1194,7 @@ input[type="checkbox"].onoffswitch-checkbox { display: none; }
 .user-info .text-holder span { font-size: 12px; line-height: 18px; color: #a3a7ab; display: block; }
 .user-info .text-holder h3 { margin: 0 0 0 0; line-height: 28px; }
 .user-info .text-holder p { color: #a3a7ab; letter-spacing: 1px; margin: 0; line-height: 24px; }
-.alert { -webkit-box-shadow: none; box-shadow: none; background: none; text-align: left; color: #fff; padding: 2px 6px; border-radius: 3px; }
+/*.alert { -webkit-box-shadow: none; box-shadow: none; background: none; text-align: left; color: #fff; padding: 2px 6px; border-radius: 3px; }*/
 .footer-widget .widget-newsletter .fieldset { position: relative; }
 .footer-widget .widget-newsletter .fieldset .alert { position: absolute; bottom: -50px; left: 1%; width: 99%; }
 .footer-widget .widget-newsletter .fieldset .alert .close, #footer .footer-widget p span { color: #fff; opacity: 1; }
