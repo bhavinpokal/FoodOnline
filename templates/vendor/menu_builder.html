@@ -1,0 +1,149 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+{% include 'includes/alerts.html' %}
+
+<!-- Main Section Start -->
+<div class="main-section">
+    <!-- Cover Image Start -->
+    {% include 'includes/vcover.html' %}
+    <!-- Cover Image End -->
+    <div class="page-section account-header buyer-logged-in">
+        <div class="container">
+            <div class="row">
+                <!-- Sidebar Start -->
+                {% include 'includes/v_sidebar.html' %}
+                <!-- Sidebar End -->
+                <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+                    <div class="user-dashboard loader-holder">
+                        <div class="user-holder">
+                            <div class="tab-content">
+                                <div id="menu-cats-items" class="tab-pane fade active in">
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <div class="element-title">
+                                                <h5>Menu Categories</h5>
+                                                <a href="#add-menu-cat-from" data-toggle="collapse" class="add-menu-item collapsed">Add Menu Category</a>
+                                            </div>
+                                            <div class="form-elements">
+                                                <form action="{% url 'menu_builder' %}" method="POST">
+                                                    {% csrf_token %}                                                       
+                                                    <div id="add-menu-cat-from" class="collapse"> <!-- New Category Add -->
+                                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                            <a href="#add-menu-cat-from" data-toggle="collapse" class="close-menu-item collapsed"><i class="icon-close2"></i></a>
+                                                            <div class="row">
+                                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                    <div class="field-holder">
+                                                                        <label>Menu Name *</label>
+                                                                        {{ form.category_name }}                                                                        
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                    <div class="field-holder">
+                                                                        <label>Description</label>
+                                                                        {{ form.description }}
+                                                                   </div>
+                                                                </div>
+                                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                    <div class="field-holder">
+                                                                        {% for field in form %}
+                                                                            {% if field.errors %}
+                                                                                {% for error in field.errors %}
+                                                                                    <span style="color:red; text-decoration:none; margin-left:7px;">{{ error }}</span>
+                                                                                {% endfor %}
+                                                                            {% endif %}
+                                                                        {% endfor %}
+                                                                        <button class="add-menu-item add-menu-item-list" style="float:left;" type="submit">Add Category</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"> <!-- Existing categories -->
+                                                    <div class="field-holder">
+                                                        <div class="service-list">
+                                                            <div class="menu-items-list-holder">
+                                                                <ul class="restaurant-menu-cats-list ui-sortable" style="display:block;">
+                                                                    {% for category in categories %}
+                                                                        <li class="menu-item">
+                                                                            <div class="drag-list">
+                                                                                <span class="drag-option ui-sortable-handle">{{ forloop.counter }}</span>
+                                                                                <div class="list-title">
+                                                                                    <h6><a href="{% url 'fooditems_by_category' category.id %}">{{ category }}</a></h6>
+                                                                                </div>
+                                                                                <div class="list-option">
+                                                                                    <a href="{% url 'edit_category' category.id %}" class="edit-menu-item collapsed"><i class="icon-mode_edit"></i></a>
+                                                                                    <a href="{% url 'delete_category' category.id %}" class="remove-menu-item" onclick="return confirm('Are you sure you want to delete {{category}} category?')"><i class="icon-delete"></i></a>
+                                                                                </div>
+                                                                            </div>
+                                                                        </li>
+                                                                    {% endfor %}
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>                                        
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Main Section End -->
+
+<script>
+    $(function() {
+      
+        {% for category in categories %}
+            // store a reference to the collapse div so that 
+            // we don't have to keep looking it up in the dom
+            counter = {{ forloop.counter }}
+            stringCounter = counter.toString();
+            text = "#add-menu-cat-from-edit-";
+            concatenation = text.concat(stringCounter);
+            
+            // register a callback function to the collapse div that
+            // will be called every time the collapse is opened.
+            $(concatenation).on("shown.bs.collapse", function() {
+                // since we know that that this function is called on
+                // open, we'll set the localStorage value to "show" 
+                localStorage.setItem("$(concatenation)", "show");
+            });
+
+            // register a callback function to the collapse div that
+            // will be called every time the collapse is closed.
+            $(concatenation).on("hidden.bs.collapse", function() {
+                // since we know that that this function is called on
+                // open, we'll set the localStorage value to "hide" 
+                localStorage.setItem("$(concatenation)", "hide");
+            });
+
+            // Since this function runs on page load (meaning only once), we can
+            // check the value of localStorage from here and then call the
+            // bootstrap collapse methods ourselves:
+
+            // Check the value of the localStorage item
+            // localStorage.getItem("$(concatenation)")
+
+            // Manipulate the collapse based on the value of the localStorage item.
+            // Note that the value is determined by lines 36 or 44. If you change those,
+            // then make sure to check that the comparison on the next line is still valid.
+            if (localStorage.getItem("$(concatenation)") === "show") {
+                $(concatenation).collapse("show");
+            } else {
+                $(concatenation).collapse("hide");
+            }
+
+        {% endfor %}
+
+    });
+</script>
+
+{% endblock content %}

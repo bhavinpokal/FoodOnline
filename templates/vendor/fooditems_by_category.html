@@ -1,0 +1,304 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+{% include 'includes/alerts.html' %}
+
+<script>
+    $(function() {
+      // store a reference to the collapse div so that 
+      // we don't have to keep looking it up in the dom
+      const collapseBurger = $("#add-menu-cat-from-edit-Burger");
+
+      // register a callback function to the collapse div that
+      // will be called every time the collapse is opened.
+      collapseBurger.on("shown.bs.collapse", function() {
+          // since we know that that this function is called on
+          // open, we'll set the localStorage value to "show" 
+          localStorage.setItem("collapseBurger", "show");
+      });
+
+      // register a callback function to the collapse div that
+      // will be called every time the collapse is closed.
+      collapseBurger.on("hidden.bs.collapse", function() {
+          // since we know that that this function is called on
+          // open, we'll set the localStorage value to "hide" 
+          localStorage.setItem("collapseBurger", "hide");
+      });
+
+      // Since this function runs on page load (meaning only once), we can
+      // check the value of localStorage from here and then call the
+      // bootstrap collapse methods ourselves:
+
+      // Check the value of the localStorage item
+      const showBurgerCollapse = localStorage.getItem("collapseBurger");
+
+      // Manipulate the collapse based on the value of the localStorage item.
+      // Note that the value is determined by lines 36 or 44. If you change those,
+      // then make sure to check that the comparison on the next line is still valid.
+      if (showBurgerCollapse === "show") {
+          collapseBurger.collapse("show");
+      } else {
+          collapseBurger.collapse("hide");
+      }
+
+    });
+  </script>
+
+<!-- Main Section Start -->
+<div class="main-section">
+    <!-- Cover Image Start -->
+    {% include 'includes/vcover.html' %}
+    <!-- Cover Image End -->
+    <div class="page-section account-header buyer-logged-in">
+        <div class="container">
+            <div class="row">
+                <!-- Sidebar Start -->
+                {% include 'includes/v_sidebar.html' %}
+                <!-- Sidebar End -->
+                <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+                    <div class="user-dashboard loader-holder">
+                        <div class="user-holder">
+                            <form action="#" method="POST">
+                                {% csrf_token %}
+                                <div class="tab-content">
+                                    <div id="menu-list-items" class="tab-pane fade active in">
+                                        <div class="row">
+                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                <div class="element-title">
+                                                    <h5>Food Items</h5>
+                                                    <div id="menu-item-loader-87340687" class="restaurant-loader"></div>
+                                                    <a href="#add_menu_item_cart_from" data-toggle="collapse" class="add-menu-item collapsed">Add Menu Item</a>
+                                                </div>
+                                                <div id="add_menu_item_cart_from" class="collapse">
+                                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                        <a href="#add_menu_item_cart_from" data-toggle="collapse" class="close-menu-item" aria-expanded="true"><i class="icon-close2"></i></a>
+                                                        <div class="row">
+                                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                <div class="field-holder">
+                                                                    <label>Restaurant Menu *</label>
+                                                                    <div class="restaurants-menu">
+                                                                        <select class="chosen-select" id="restaurant_menu_295979393">
+                                                                            {% for cat in categories %}
+                                                                                <option {% if cat == category %}selected="selected"{% endif %} value="{{ cat }}">{{ cat.category_name|capfirst }}</option>
+                                                                            {% endfor %}
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                                                <div class="field-holder">
+                                                                    <label>Title *</label>
+                                                                    <input class="menu-item-title" id="menu_item_title_295979393" type="text" placeholder="Menu Item Title">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                                                <div class="field-holder">
+                                                                    <label>Price * (₹)</label>
+                                                                    <input class="menu-item-price" id="menu_item_price_295979393" type="text" placeholder="Menu Item Price">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                                                <div class="field-holder">
+                                                                    <label>Food Image</label>
+                                                                    <div id="browse-btn-sec-295979393" class="browse-btn-sec" style="display: block !important;">
+                                                                        <input type="file" id="image-icon-295979393" data-id="295979393" name="image_icon_295979393" class="browse-menu-icon-file" style="display: none;">
+                                                                        <a id="browse-menu-icon-img-295979393" href="#" class="browse-menu-icon-img btn bgcolor" data-id="295979393">Browse</a>
+                                                                    </div>
+                                                                    <div id="browse-img-sec-295979393" class="browse-image-sec" style="display: none !important;">
+                                                                        <div class="icon-img-holder">
+                                                                            <a href="#" data-id="295979393" class="remove-icon"><i class="icon-close2"></i></a>
+                                                                            <img id="img-val-base-295979393" src="#" alt="">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                <div class="field-holder">
+                                                                    <label>Nutritional Information icons</label>
+                                                                    <div class="nutri-info-icons">
+                                                                        <ul>
+                                                                            <li><input id="nutri-icon-3462998" type="checkbox" name="menu_item_nutri_info[]" value="3665"><label for="nutri-icon-3462998"><a data-toggle="tooltip" title="" data-original-title="Contain Bnana"><img src="{% static 'extra-images/natural-item03.png' %}" alt=""></a></label></li>
+                                                                            <li><input id="nutri-icon-2362526" type="checkbox" name="menu_item_nutri_info[]" value="3663"><label for="nutri-icon-2362526"><a data-toggle="tooltip" title="" data-original-title="Contain Egg"><img src="{% static 'extra-images/natural-item01.png' %}" alt=""></a></label></li>
+                                                                            <li><input id="nutri-icon-7381447" type="checkbox" name="menu_item_nutri_info[]" value="3664"><label for="nutri-icon-7381447"><a data-toggle="tooltip" title="" data-original-title="Onion"><img src="{% static 'extra-images/natural-item02.png' %}" alt=""></a></label></li>
+                                                                            <li><input id="nutri-icon-6243024" type="checkbox" name="menu_item_nutri_info[]" value="3666"><label for="nutri-icon-6243024"><a data-toggle="tooltip" title="" data-original-title="Vegitable"><img src="{% static 'extra-images/natural-item04.png' %}" alt=""></a></label></li>
+                                                                            <li><input id="nutri-icon-800282" type="checkbox" name="menu_item_nutri_info[]" value="3667"><label for="nutri-icon-800282"><a data-toggle="tooltip" title="" data-original-title="Chille"><img src="{% static 'extra-images/natural-item05.png' %}" alt=""></a></label></li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                <div class="field-holder">
+                                                                    <label>Description</label>
+                                                                    <textarea class="menu-item-desc foodbakery_editor" id="menu_item_desc_295979393" placeholder="Menu Item Description test"></textarea>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                <div class="field-holder">
+                                                                    <a class="add-menu-item-extra add-menu-item-extra-295979393" href="#">Add Menu Item Extra</a>
+                                                                    <a class="add-menu-item add-menu-item-list add-menu-item-list-295979393" href="#">Add to Menu Item list</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                <div class="field-holder">
+                                                    <div class="service-list">
+                                                        <ul id="restaurant_menu_items-list-87340687" class="restaurant_menu_items_cat_list panel-group ui-sortable">
+                                                            {% if foodItems %}
+                                                                <li id="menu-pizzas2" class="panel panel-default">
+                                                                    <div class="element-title panel-heading">
+                                                                        <span class="drag-option ui-sortable-handle"><i class="icon-bars"></i></span>
+                                                                        <a data-toggle="collapse" data-parent="#restaurant_menu_items-list-87340687" href="#collapse-0" aria-expanded="false" class="collapsed">{{ category }}</a>
+                                                                    </div>
+                                                                    <div id="collapse-0" class="panel-collapse collapse in" aria-expanded="true" role="tabpanel">
+                                                                        <ul class="menu-items-list ui-sortable">
+                                                                            {% for fooditem in foodItems %}
+                                                                            <li>
+                                                                                <div class="drag-list">
+                                                                                    <span class="drag-option ui-sortable-handle"><i class="icon-bars"></i></span>
+                                                                                    <div class="icon-holder"><img src="{{ fooditem.image.url }}" alt="{{ fooditem.food_title }}"></div>
+                                                                                    <div class="list-title">
+                                                                                        <h6>{{ fooditem.food_title }}</h6>
+                                                                                        <p>{{ fooditem.description }}</p>
+                                                                                    </div>
+                                                                                    <div class="list-price">
+                                                                                        <span><b>₹</b><b>{{ fooditem.price }}</b></span>
+                                                                                    </div>
+                                                                                    <div class="list-option">
+                                                                                        <a data-toggle="collapse" href="#restaurant_menu_items_list_{{ forloop.counter }}" class="edit-menu-item"><i class="icon-mode_edit"></i></a>
+                                                                                        <a href="#" class="remove-menu-item"><i class="icon-close2"></i></a>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div id="restaurant_menu_items_list_{{ forloop.counter }}" class="collapse in">
+                                                                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                                        <a data-toggle="collapse" href="#restaurant_menu_items_list_{{ forloop.counter }}" class="close-menu-item"><i class="icon-close2"></i></a>
+                                                                                        <div class="row">
+                                                                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                                                <div class="field-holder">
+                                                                                                    <label>Restaurant Menu *</label>
+                                                                                                    <div class="restaurants-menu">
+                                                                                                        <select class="chosen-select">
+                                                                                                            {% for cat in categories %}
+                                                                                                            <option {% if cat == category %}selected="selected"{% endif %} value="{{ cat }}">{{ cat.category_name|capfirst }}</option>
+                                                                                                            {% endfor %}
+                                                                                                        </select>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                                                                                <div class="field-holder">
+                                                                                                    <label>Title *</label>
+                                                                                                    <input class="menu-item-title" value="Chicken Tandoori Special 12&quot; Deep Pan" type="text" placeholder="Menu Item Title">
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                                                                                <div class="field-holder">
+                                                                                                    <label>Price * (₹)</label><input class="menu-item-price" type="text" value="4.5" placeholder="Menu Item Price">
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                                                                                <div class="field-holder">
+                                                                                                    <label>Food Image</label>
+                                                                                                    <div id="browse-btn-sec-681849489" class="browse-btn-sec" style="display: none !important;">
+                                                                                                        <input type="file" id="image-icon-681849489" data-id="681849489" name="image_icon_681849489" class="browse-menu-icon-file" style="display: none;">
+                                                                                                        <a id="browse-menu-icon-img-681849489" href="#" class="browse-menu-icon-img btn bgcolor" data-id="681849489">Browse</a>
+                                                                                                    </div>
+                                                                                                    <div id="browse-img-sec-681849489" class="browse-image-sec" style="display: block !important;">
+                                                                                                        <div class="icon-img-holder">
+                                                                                                            <a href="#" data-id="681849489" class="remove-icon"><i class="icon-close2"></i></a>
+                                                                                                            <img id="img-val-base-681849489" src="{% static 'extra-images/cover-photo24-150x150.jpg' %}" alt="">
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                                                <div class="field-holder">
+                                                                                                    <label>Nutritional Information icons</label>
+                                                                                                    <div class="nutri-info-icons">
+                                                                                                        <ul>
+                                                                                                            <li class="active">
+                                                                                                                <input id="nutri-icon-2623378" checked="checked" type="checkbox" name="menu_item_nutri[681849489][]" value="3665">
+                                                                                                                <label for="nutri-icon-2623378">
+                                                                                                                <a data-toggle="tooltip" title="" data-original-title="Contain Bnana">
+                                                                                                                    <img src="{% static 'extra-images/natural-item03.png' %}" alt="">
+                                                                                                                </a>
+                                                                                                                </label>
+                                                                                                            </li>
+                                                                                                            <li><input id="nutri-icon-6797545" type="checkbox" name="menu_item_nutri[681849489][]" value="3663"><label for="nutri-icon-6797545"><a data-toggle="tooltip" title="" data-original-title="Contain Egg"><img src="{% static 'extra-images/natural-item01.png' %}" alt=""></a></label></li>
+                                                                                                            <li><input id="nutri-icon-8999413" type="checkbox" name="menu_item_nutri[681849489][]" value="3664"><label for="nutri-icon-8999413"><a data-toggle="tooltip" title="" data-original-title="Onion"><img src="{% static 'extra-images/natural-item02.png' %}" alt=""></a></label></li>
+                                                                                                            <li><input id="nutri-icon-8085819" type="checkbox" name="menu_item_nutri[681849489][]" value="3666"><label for="nutri-icon-8085819"><a data-toggle="tooltip" title="" data-original-title="Vegitable"><img src="{% static 'extra-images/natural-item04.png' %}" alt=""></a></label></li>
+                                                                                                            <li><input id="nutri-icon-8295619" type="checkbox" name="menu_item_nutri[681849489][]" value="3667"><label for="nutri-icon-8295619"><a data-toggle="tooltip" title="" data-original-title="Chille"><img src="{% static 'extra-images/natural-item05.png' %}" alt=""></a></label></li>
+                                                                                                        </ul>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                                                <div class="field-holder">
+                                                                                                    <label>Description</label>
+                                                                                                    <textarea class="menu-item-desc foodbakery_editor" placeholder="Menu Item Description test"></textarea>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <ul id="menu-item-extra-list-681849489" class="menu-item-extra-list">
+                                                                                                <li class="menu-item-extra-681849489">
+                                                                                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                                                        <div class="row">
+                                                                                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                                                                <div class="field-holder">
+                                                                                                                    <label>Heading</label>
+                                                                                                                    <input class="menu-item-extra-heading" value="" type="text" placeholder="Heading">
+                                                                                                                </div>
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </li>
+                                                                                            </ul>
+                                                                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                                                <div class="field-holder">
+                                                                                                    <a class="add-menu-item-extra add-menu-item-extra-681849489" href="#">Add Menu Item Extra</a>
+                                                                                                    <a class="add-menu-item add-menu-item-list add-menu-item-list-681849489" href="#">Save</a>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </li>
+                                                                            {% endfor %}
+                                                                        </ul>
+                                                                    </div>
+                                                                </li>
+                                                            {% else %}
+                                                            
+                                                            {% endif %}
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% if foodItems %}
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <div class="field-holder">
+                                                <div id="update-menu-items-holder" class="payment-holder input-button-loader">
+                                                    <input class="redirect-button-click update-menu-items" value="Update Menu" type="submit">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% else %}
+                                    <div class="text-center lead" style="margin-top:50px;">No Menu Items found for <strong>{{ category }}</strong></div>
+                                {% endif %}
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Main Section End -->
+
+{% endblock content %}
