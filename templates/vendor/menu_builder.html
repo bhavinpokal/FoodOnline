@@ -65,20 +65,24 @@
                                                         <div class="service-list">
                                                             <div class="menu-items-list-holder">
                                                                 <ul class="restaurant-menu-cats-list ui-sortable" style="display:block;">
-                                                                    {% for category in categories %}
-                                                                        <li class="menu-item">
-                                                                            <div class="drag-list">
-                                                                                <span class="drag-option ui-sortable-handle">{{ forloop.counter }}</span>
-                                                                                <div class="list-title">
-                                                                                    <h6><a href="{% url 'fooditems_by_category' category.id %}">{{ category }}</a></h6>
+                                                                    {% if categories %}
+                                                                        {% for category in categories %}
+                                                                            <li class="menu-item">
+                                                                                <div class="drag-list">
+                                                                                    <span class="drag-option ui-sortable-handle">{{ forloop.counter }}</span>
+                                                                                    <div class="list-title">
+                                                                                        <h6><a href="{% url 'fooditems_by_category' category.id %}">{{ category }}</a></h6>
+                                                                                    </div>
+                                                                                    <div class="list-option">
+                                                                                        <a href="{% url 'edit_category' category.id %}" class="edit-menu-item collapsed"><i class="icon-mode_edit"></i></a>
+                                                                                        <a href="{% url 'delete_category' category.id %}" class="remove-menu-item" onclick="return confirm('Are you sure you want to delete {{category}} category?')"><i class="icon-delete"></i></a>
+                                                                                    </div>
                                                                                 </div>
-                                                                                <div class="list-option">
-                                                                                    <a href="{% url 'edit_category' category.id %}" class="edit-menu-item collapsed"><i class="icon-mode_edit"></i></a>
-                                                                                    <a href="{% url 'delete_category' category.id %}" class="remove-menu-item" onclick="return confirm('Are you sure you want to delete {{category}} category?')"><i class="icon-delete"></i></a>
-                                                                                </div>
-                                                                            </div>
-                                                                        </li>
-                                                                    {% endfor %}
+                                                                            </li>
+                                                                        {% endfor %}
+                                                                    {% else %}
+                                                                        <div class="text-center lead" style="margin-top:50px;">No categories found</div>
+                                                                    {% endif %}
                                                                 </ul>
                                                             </div>
                                                         </div>
