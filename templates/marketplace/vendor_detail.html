@@ -1,0 +1,232 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<!-- Main Section Start -->
+<div class="main-section">
+    <div class="page-section restaurant-detail-image-section" style=" background: url({% if vendor.user_profile.cover_photo %}{{ vendor.user_profile.cover_photo.url }}{% else %}{% static 'extra-images/cover-photo01.jpg' %}{% endif %}) no-repeat scroll 0 0 / cover;">
+        <!-- Container Start -->
+        <div class="container">
+            <!-- Row Start -->
+            <div class="row">
+                <!-- Column Start -->
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="company-info-detail">
+                        <div class="company-info">
+                            <div class="img-holder">
+                                <figure>
+                                    {% if vendor.user_profile.profile_picture %}
+                                        <img src="{{ vendor.user_profile.profile_picture.url }}" alt="Profile Picture">
+                                    {% else %}
+                                        <img src="{% static 'extra-images/listing-logo18.png' %}" alt="Profile Picture">
+                                    {% endif %}
+                                </figure>
+                            </div>
+                            <div class="text-holder">
+                                <div class="rating-star">
+                                    <span class="rating-box" style="width: 100%;"></span>
+                                </div>
+                                <span class="reviews">(1 Reviews)</span>
+                                <span class="restaurant-title">{{ vendor.vendor_name }}</span>
+                                <div class="text">
+                                    <i class="icon-local_pizza"></i>
+                                    <p>Apple Juice</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="delivery-timing reviews-sortby">
+                            <div class="text">
+                                <i class="icon-motorcycle"></i>
+                                <p>
+                                    Delivery fee: £10.00<span>
+                                        Min Order : £10.00 Max Order : £50.00</span>
+                                </p>
+                            </div>
+                            <ul>
+                                <li>
+                                    <a href="#" class="reviews-sortby-active">
+                                        <span>Today :</span>
+                                        11:00 am - 11:00 pm <i class="icon-chevron-small-down"></i>
+                                    </a>
+                                    <ul class="delivery-dropdown">
+                                        <li><a href="#"><span class="opend-day">Monday</span> <span class="opend-time"><small>:</small> 11:00 am - 11:00
+                                                    pm</span></a></li>
+                                        <li><a href="#"><span class="opend-day">Tuesday</span> <span class="opend-time"><small>:</small> 11:00 am - 11:00
+                                                    pm</span></a></li>
+                                        <li><a href="#"><span class="opend-day">Wednesday</span> <span class="opend-time"><small>:</small> 11:00 am - 11:00
+                                                    pm</span></a></li>
+                                        <li><a href="#"><span class="opend-day">Thursday</span> <span class="opend-time"><small>:</small> 11:00 am - 11:00
+                                                    pm</span></a></li>
+                                        <li><a href="#"><span class="opend-day">Friday</span> <span class="opend-time"><small>:</small> 11:00 am - 11:00
+                                                    pm</span></a></li>
+                                        <li><a href="#"><span class="opend-day">Saturday</span> <span class="opend-time"><small>:</small> 11:00 am - 11:00
+                                                    pm</span></a></li>
+                                        <li><a href="#"><span class="opend-day">Sunday</span> <span class="opend-time close-day"><small>:</small>Closed</span></a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- Column End -->
+            </div>
+            <!-- Row End -->
+        </div>
+        <!-- Container End -->
+    </div>
+    <div class="page-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-2 col-md-2 col-sm-3 col-xs-12 sticky-sidebar">
+                    <div class="filter-wrapper">
+                        <div class="categories-menu">
+                            <h6><i class="icon-restaurant_menu"></i>Categories</h6>
+                            <ul class="menu-list">
+                                {% for category in categories %}
+                                    <li class="active"><a href="#" class="menu-category-link"> {{ category.category_name }} </a></li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-7 col-md-7 col-sm-9 col-xs-12">
+                    <div class="tabs-holder horizontal">
+                        <ul class="stickynav-tabs nav nav-tabs">
+                            <li class="active"><a data-toggle="tab" href="#home"><i class="icon- icon-room_service"></i>Menu</a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <div id="home" class="tab-pane fade in active">
+                                <div class="menu-itam-holder">
+                                    <div class="field-holder sticky-search">
+                                        <input id="menu-srch-6272" data-id="6272" class="input-field dev-menu-search-field" type="text" placeholder="Search food item">
+                                    </div>
+                                    <div id="menu-item-list-6272" class="menu-itam-list">
+                                        {% for category in categories %}
+                                            <div class="element-title" id="menu-category-0">
+                                                <h5 class="text-color">{{ category }}</h5>
+                                                <span>{{ category.description }}</span>
+                                            </div>
+                                            <ul>
+                                                {% for food in category.fooditems.all %}
+                                                    <li>
+                                                        <div class="image-holder"><img src="{{ food.image.url }}" alt="Food Image" height="75px;"></div>
+                                                        <div class="text-holder">
+                                                            <h6>{{ food }}</h6>
+                                                            <span style="margin-right:80px;">{{ food.description }}</span>
+                                                        </div>
+                                                        <div class="price-holder">
+                                                            <span class="price">₹{{ food.price }}</span>
+                                                            <a href="#" class="decrease-cart" data-id="{{ food.id }}" data-url="{% url 'decrease_cart' food.id %}"><i class="icon-minus3 text-color"></i></a>
+                                                            <label id="qty-{{ food.id }}" style="margin:0 15px;">0</label>
+                                                            <a href="#" class="increase-cart" data-id="{{ food.id }}" data-url="{% url 'add_to_cart' food.id %}"><i class="icon-plus4 text-color"></i></a>
+                                                        </div>
+                                                    </li>
+                                                {% endfor %}
+                                            </ul>
+                                        {% endfor %}
+                                    </div>
+                                    {% for item in cart_items %}
+                                        <span class="item-qty" id="qty-{{ item.fooditem.id }}" data-qty="{{ item.quantity }}" style="display:none;">{{ item.quantity }}</span>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="sticky-sidebar col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                    <div class="user-order-holder">
+                        <div class="user-order">
+                            <h6><i class="icon-shopping-basket"></i>Your Order</h6>
+                            <span class="error-message pre-order-msg">This restaurant allows Pre orders.</span>
+                            <span class="discount-info" style="display: block;">If you have a discount code,<br>
+                                you will
+                                be able to input it<br> at the payments stage.</span>
+                            <div class="select-option dev-select-fee-option">
+                                <ul>
+                                    <li>
+                                        <input id="order-pick-up-fee" type="radio" name="order_fee_type">
+                                        <label for="order-pick-up-fee">Pick-Up</label>
+                                        <span>£15.00</span>
+                                    </li>
+                                    <li>
+                                        <input id="order-delivery-fee" checked="checked" type="radio" name="order_fee_type">
+                                        <label for="order-delivery-fee">Delivery</label>
+                                        <span>£10.00</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div id="dev-menu-orders-list">
+                                <ul class="categories-order">
+                                    <li>
+                                        <a href="#" class="btn-cross dev-remove-menu-item"><i class=" icon-cross3"></i></a>
+                                        <a>Chicken Tandoori Special 12" Deep Pan</a>
+                                        <span class="category-price">£4.50</span>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="btn-cross dev-remove-menu-item"><i class=" icon-cross3"></i></a>
+                                        <a>Chicken Tandoori Special 09" Deep Pan</a>
+                                        <span class="category-price">£6.50</span>
+                                        <ul>
+                                            <li>Drinks - chillies : <span class="category-price">£3.50</span>
+                                            </li>
+                                        </ul>
+                                        <a href="#" data-toggle="modal" data-target="#extras-0-1" class="update-menu dev-update-menu-btn">Edit</a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="btn-cross dev-remove-menu-item"><i class=" icon-cross3"></i></a>
+                                        <a>Margherita 12" Deep Pan</a>
+                                        <span class="category-price">£5.50</span>
+                                    </li>
+                                </ul>
+                                <div class="price-area dev-menu-price-con">
+                                    <ul>
+                                        <li>Subtotal <span class="price">£<em class="dev-menu-subtotal">20.00</em></span></li>
+                                        <li class="restaurant-fee-con">
+                                            <span class="fee-title">Pick-Up</span>
+                                            <span class="price">£<em class="dev-menu-charges">15.00</em></span>
+                                        </li>
+                                        <li>VAT (13%) <span class="price">£<em class="dev-menu-vtax">4.55</em></span></li>
+                                    </ul>
+                                    <p class="total-price">Total <span class="price">£<em class="dev-menu-grtotal">39.55</em></span></p>
+                                </div>
+                            </div>
+                            <div id="dev-no-menu-orders-list">
+                                <span class="success-message">There are no items in your basket.</span>
+                            </div>
+                            <div class="pay-option dev-order-pay-options">
+                                <ul>
+                                    <li>
+                                        <input id="order-cash-payment" type="radio" name="order_payment_method">
+                                        <label for="order-cash-payment"><i class="icon-coins"></i>Cash</label>
+                                    </li>
+                                    <li>
+                                        <input id="order-card-payment" type="radio" checked="checked" name="order_payment_method">
+                                        <label for="order-card-payment"><i class="icon-credit-card4"></i>Card</label>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <div class="input-group date">
+                                            <input type="text" name="delivery_date" id="datetimepicker1" class="form-control" value="04-04-2020 10:07" placeholder="Select Date and Time">
+                                            <span class="input-group-addon">
+                                                <span class="icon-event_available"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="#" class="menu-order-confirm">Confirm Order</a>
+                            <span class="menu-loader"></span>
+                        </div>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Main Section End -->
+
+{% endblock content %}

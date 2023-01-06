@@ -4950,6 +4950,26 @@ a.badge:focus {
   text-decoration: none;
   cursor: pointer;
 }
+.badge-warning {
+  color: #212529;
+  background-color: #ffc107;
+}
+a.badge-warning:hover, a.badge-warning:focus {
+  color: #212529;
+  background-color: #d39e00;
+}
+.badge-danger {
+  color: #fff;
+  background-color: #dc3545;
+}
+a.badge-danger:hover, a.badge-danger:focus {
+  color: #fff;
+  background-color: #bd2130;
+}
+a.badge-danger:focus, a.badge-danger.focus {
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.5);
+}
 .list-group-item.active > .badge,
 .nav-pills > .active > a > .badge {
   color: #337ab7;

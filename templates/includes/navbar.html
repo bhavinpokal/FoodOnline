@@ -4,9 +4,9 @@
     <!-- Header Start -->
     <header id="header">
         <div class="main-header">
-            <div class="container">
+            <div class="container-fluid">
                 <div class="row">
-                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                         <div class="logo">
                             <figure>
                                 <a href="{% url 'home' %}" class="light-logo">
@@ -22,28 +22,22 @@
                                         <li class="select-location">
                                             <div class="foodbakery-locations-fields-group">
                                                 <form action="#">
-                                                    <span id="foodbakery_radius_location_open"
-                                                        class="foodbakery-radius-location"><i
-                                                            class="icon-target5"></i></span>
-                                                    <span class="foodbakery-input-cross foodbakery-input-cross-header"
-                                                        style="display:none;">
-                                                        <i class="icon-cross"></i></span>
-                                                    <input type="text" value="" name="location"
-                                                        placeholder="All Locations" autocomplete="off">
-
-                                                    <span><span class="loc-icon-holder"><i
-                                                                class="icon-target3"></i></span></span>
-                                                    <div class="select-location" id="foodbakery-radius-range622192"
-                                                        style="display: none;">
+                                                    <span id="foodbakery_radius_location_open" class="foodbakery-radius-location">
+                                                        <i class="icon-target5"></i>
+                                                    </span>
+                                                    <span class="foodbakery-input-cross foodbakery-input-cross-header" style="display:none;">
+                                                        <i class="icon-cross"></i>
+                                                    </span>
+                                                    <input type="text" value="" name="location" placeholder="All Locations" autocomplete="off">
+                                                    <span><span class="loc-icon-holder"><i class="icon-target3"></i></span></span>
+                                                    <div class="select-location" id="foodbakery-radius-range622192" style="display: none;">
                                                         <div class="select-popup popup-open">
-                                                            <a id="location_close_popup622192" href="javascript:0;"
-                                                                class="location-close-popup">
-                                                                <i class="icon-times"></i></a>
-                                                            <input type="hidden" class="foodbakery-radius"
-                                                                name="foodbakery_radius" value="10">
+                                                            <a id="location_close_popup622192" href="javascript:0;" class="location-close-popup">
+                                                                <i class="icon-times"></i>
+                                                            </a>
+                                                            <input type="hidden" class="foodbakery-radius" name="foodbakery_radius" value="10">
                                                             <p>Show with in</p>
-                                                            <input id="ex16b313324" type="text" data-value="10"
-                                                                value="10" style="display: none;">
+                                                            <input id="ex16b313324" type="text" data-value="10" value="10" style="display: none;">
                                                             <script>
                                                                 jQuery(document).ready(function () {
                                                                     var elem = jQuery("#ex16b313324");
@@ -74,16 +68,12 @@
                                                                 });
                                                             </script>
                                                             <span>Miles:
-                                                                <span id="ex16b313324CurrentSliderValLabel">
-                                                                    10
-                                                                </span>
+                                                                <span id="ex16b313324CurrentSliderValLabel">10</span>
                                                             </span>
                                                             <br>
                                                             <p class="my-location">of
                                                                 <i class="cs-color icon-location-arrow"></i>
-                                                                <a id="foodbakery-geo-location-all"
-                                                                    class="cs-color foodbakery-geo-location313324"
-                                                                    href="javascript:void(0)">
+                                                                <a id="foodbakery-geo-location-all" class="cs-color foodbakery-geo-location313324" href="javascript:void(0)">
                                                                     My location
                                                                 </a>
                                                             </p>
@@ -107,27 +97,24 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                         <div class="login-option">
                             {% if user.is_authenticated %}
-                            <a class="cs-color cs-popup-joinus-btn login-popup" href="{% url 'myAccount' %}">
-                                My Account
-                            </a>
-                            <span style="margin-left:7px; margin-right:7px;"></span>
-                            <a class="cs-color cs-popup-joinus-btn login-popup text-danger" href="{% url 'logout' %}" style="margin-left:0; color:#c33332;">
-                                Logout
-                            </a>
+                                <a href="{% url 'cart' %}" style="margin-right:3px;">
+                                    <i class="icon-shopping-cart" style="font-size:18px;"></i>
+                                    <span class="badge badge-danger" id="cart_counter" style="font-size:10px; border-radius:50px; position:relative; bottom:10px; left:-6px;">{{ cart_count }}</span>
+                                </a>
+                            {% endif %}
+                            <a class="cs-color cs-popup-joinus-btn login-popup" href="{% url 'marketplace' %}" style="color:#c33332; margin-left:3px;">Marketplace</a>
+                            {% if user.is_authenticated %}
+                                <a class="cs-color cs-popup-joinus-btn login-popup" href="{% url 'myAccount' %}">My Account</a>
+                                <span style="margin-left:7px; margin-right:7px;"></span>
+                                <a class="cs-color cs-popup-joinus-btn login-popup" href="{% url 'logout' %}" style="margin-left:0; color:#c33332;">Logout</a>
                             {% else %}
-                            <a class="cs-color cs-popup-joinus-btn login-popup" href="{% url 'login' %}">
-                                Login
-                            </a>
-                            <span>/</span>
-                            <a class="cs-color cs-popup-joinus-btn login-popup" href="{% url 'registerUser' %}" style="margin-left:0;">
-                                Register
-                            </a>
-                            <a class="get-start-btn" href="{% url 'registerVendor' %}">
-                                Register Restaurant
-                            </a>
+                                <a class="cs-color cs-popup-joinus-btn login-popup" href="{% url 'login' %}">Login</a>
+                                <span>/</span>
+                                <a class="cs-color cs-popup-joinus-btn login-popup" href="{% url 'registerUser' %}" style="margin-left:0;">Register</a>
+                                <a class="get-start-btn" href="{% url 'registerVendor' %}">Register Restaurant</a>
                             {% endif %}
                         </div>
                     </div>

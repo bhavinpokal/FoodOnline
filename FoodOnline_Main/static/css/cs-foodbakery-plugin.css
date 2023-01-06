@@ -761,7 +761,7 @@ ul.sub-nav li a { line-height: 20px; }
 .menu-itam-holder .menu-itam-list .price-holder a { position: relative; display: inline-block; outline: none; text-decoration: none; -webkit-box-shadow: none; box-shadow: none; }
 .menu-itam-holder .menu-itam-list .price-holder a .foodbakery-button-loader { width: 22px; right: 0; left: auto; border-radius: 50%; }
 .menu-itam-holder .menu-itam-list .price-holder a .foodbakery-button-loader .double-bounce1, .menu-itam-holder .menu-itam-list .price-holder a .foodbakery-button-loader .double-bounce2 { left: -1px; }
-.menu-itam-holder .menu-itam-list .price-holder a i { font-size: 14px; vertical-align: middle; margin: 0 0 0 28px; border: 1px solid; border-radius: 50%; height: 22px; width: 22px; text-align: center; line-height: 21px; display: inline-block; }
+.menu-itam-holder .menu-itam-list .price-holder a i { font-size: 14px; vertical-align: middle; margin: 0 0 0 15px; border: 1px solid; border-radius: 50%; height: 22px; width: 22px; text-align: center; line-height: 21px; display: inline-block; }
 .menu-itam-holder .menu-itam-list .price-holder a + span { position: absolute; top: 4px; right: -20px; }
 .menu-itam-holder .menu-itam-list .price-holder a .foodbakery-button-loader .double-bounce2, .menu-itam-holder .menu-itam-list .price-holder a .foodbakery-button-loader .double-bounce1 { position: absolute; left: 0; right: 0; top: 0; bottom: 0; margin: auto; width: 20px; height: 20px; -webkit-animation: sk-bounce-small 1.0s infinite ease-in-out; -moz-animation: sk-bounce-small 1.0s infinite ease-in-out; animation: sk-bounce-small 1.0s infinite ease-in-out; }
 .menu-itam-holder .menu-itam-list .price-holder a .foodbakery-button-loader .spinner { width: 20px; }
