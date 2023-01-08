@@ -23,6 +23,7 @@ from marketplace import views as MarketPlaceViews
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home, name='home'),
+    path('search/', MarketPlaceViews.search, name='search'),
     path('', include('accounts.urls')),
     path('marketplace/', include('marketplace.urls')),
     path('cart/', MarketPlaceViews.cart, name='cart'),
