@@ -185,22 +185,6 @@
                   <a href="#">England</a>
                   <span>(28 places)</span>
                 </li>
-                <li>
-                  <a href="#">Cheshire</a>
-                  <span>(3 places)</span>
-                </li>
-                <li>
-                  <a href="#">Devon</a>
-                  <span>(3 places)</span>
-                </li>
-                <li>
-                  <a href="#">Bedfordshire</a>
-                  <span>(2 places)</span>
-                </li>
-                <li>
-                  <a href="#">Bedfordshire</a>
-                  <span>(2 places)</span>
-                </li>
               </ul>
             </div>
             <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
@@ -208,26 +192,6 @@
                 <li>
                   <a href="#">Fowey</a>
                   <span>(2 places)</span>
-                </li>
-                <li>
-                  <a href="#">Bude</a>
-                  <span>(2 places)</span>
-                </li>
-                <li>
-                  <a href="#">Kent</a>
-                  <span>(2 places)</span>
-                </li>
-                <li>
-                  <a href="#">Maidstone</a>
-                  <span>(2 places)</span>
-                </li>
-                <li>
-                  <a href="#">Scotland</a>
-                  <span>(2 places)</span>
-                </li>
-                <li>
-                  <a href="#">Bedford</a>
-                  <span>(1 places)</span>
                 </li>
               </ul>
             </div>
@@ -237,22 +201,6 @@
                   <a href="#">Bridport</a>
                   <span>(1 places)</span>
                 </li>
-                <li>
-                  <a href="#">Bude</a>
-                  <span>(1 places)</span>
-                </li>
-                <li>
-                  <a href="#">Cambridgeshire</a>
-                  <span>(1 places)</span>
-                </li>
-                <li>
-                  <a href="#">County Down</a>
-                  <span>(1 places)</span>
-                </li>
-                <li>
-                  <a href="#">Crewe</a>
-                  <span>(1 places)</span>
-                </li>
               </ul>
             </div>
             <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
@@ -260,18 +208,6 @@
                 <li>
                   <a href="#">Huntingdon</a>
                   <span>(1 places)</span>
-                </li>
-                <li>
-                  <a href="#">Honiton</a>
-                  <span>(0 places)</span>
-                </li>
-                <li>
-                  <a href="#">Stony Stratford</a>
-                  <span>(0 places)</span>
-                </li>
-                <li>
-                  <a href="#">Wales</a>
-                  <span>(0 places)</span>
                 </li>
               </ul>
             </div>
@@ -303,9 +239,9 @@
                 <li class="has-border">
                   <figure>
                     {% if vendor.user_profile.profile_picture %}
-                    <a href="#"><img src="{{ vendor.user_profile.profile_picture.url }}" class="attachment-full size-full wp-post-image" alt="" /></a>
+                    <a href="{% url 'vendor_detail' vendor.vendor_slug %}"><img src="{{ vendor.user_profile.profile_picture.url }}" class="attachment-full size-full wp-post-image" alt="" /></a>
                     {% else %}
-                      <a href="#"><img src="{% static 'extra-images/listing-logo18.png' %}" class="attachment-full size-full wp-post-image" alt="" /></a>
+                      <a href="{% url 'vendor_detail' vendor.vendor_slug %}"><img src="{% static 'extra-images/listing-logo18.png' %}" class="attachment-full size-full wp-post-image" alt="" /></a>
                     {% endif %}
                   </figure>
                 </li>
@@ -317,7 +253,7 @@
     </div>
   </div>
   <!-- Top Restarurants Section End -->
-  <!-- Choose From Most Popular Listin Start -->
+  <!-- Choose From Most Popular Listing Start -->
   <div class="page-section nopadding cs-nomargin" style="margin-top: 0px; padding-top: 60px; padding-bottom: 50px; margin-bottom: 0px; background: #ffffff;">
     <div class="container">
       <div class="row">
@@ -335,7 +271,7 @@
                   <div class="list-post featured">
                     <div class="img-holder">
                       <figure>
-                        <a href="#">
+                        <a href="{% url 'vendor_detail' vendor.vendor_slug %}">
                           {% if vendor.user_profile.profile_picture %}
                             <img src="{{ vendor.user_profile.profile_picture.url }}" class="img-thumb wp-post-image" alt="Profile Picture" />
                           {% else %}
@@ -356,7 +292,7 @@
                       </div>-->
                       <div class="post-title">
                         <h5>
-                          <a href="#">{{ vendor }}</a>
+                          <a href="{% url 'vendor_detail' vendor.vendor_slug %}">{{ vendor }}</a>
                         </h5>
                       </div>
                       {% if vendor.user_profile.city and vendor.user_profile.state %}
@@ -381,7 +317,9 @@
                             </div>
                           </div>
                         </div>
-                        <span>Totnes</span>
+                        {% if vendor.kms %}
+                        <span>{{ vendor.kms }}km{{ vendor.kms|pluralize }} away</span>
+                        {% endif %}
                       </div>
                     </div>
                     <div class="list-option">
@@ -452,13 +390,13 @@
     </div>
   </div>
   <!-- Choose From Most Popular Listing End -->
-  <!-- Choose From Most Popular Section Start -->
+  <!-- User Reviews Section Start -->
   <div class="page-section nopadding cs-nomargin" style="margin-top: 0px; padding-top: 54px; padding-bottom: 36px; margin-bottom: 0px; background: #ebedf3;">
     <div class="container">
       <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
           <div class="element-title align-center">
-            <h2>Choose From Most Popular</h2>
+            <h2>User Reviews</h2>
           </div>
         </div>
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -534,7 +472,7 @@
       </div>
     </div>
   </div>
-  <!-- Choose From Most Popular Section End -->
+  <!-- User Reviews Section End -->
   <!-- Colunm Text Section Start -->
   <div class="page-section nopadding cs-nomargin" style="margin-top: 0px; padding-top: 80px; padding-bottom: 0px; margin-bottom: 0px; background: #ffffff;">
     <div class="container">
