@@ -66,9 +66,6 @@ function onPlaceChanged() {
     }
 }
 
-
-// Cart Functionalities
-
 $(document).ready(function () {
     // Increase the cart
     $('.increase-cart').on('click', function (e) {
@@ -197,4 +194,67 @@ $(document).ready(function () {
             $('#total').html(grand_total);
         }
     }
+
+    // Add Business Hours
+    $('.add-hour').on('click', function (e) {
+        e.preventDefault();
+        var day = document.getElementById('id_day').value
+        var from_hour = document.getElementById('id_from_hour').value
+        var to_hour = document.getElementById('id_to_hour').value
+        var is_closed = document.getElementById('id_is_closed').checked
+        var csrf_token = $('input[name=csrfmiddlewaretoken]').val()
+        var url = document.getElementById('add-hour-url').value
+
+        if (is_closed) {
+            is_closed = 'True'
+            condition = 'day != ""'
+        } else {
+            is_closed = 'False'
+            condition = "day!='' && from_hour!='' && to_hour!=''"
+        }
+        if (eval(condition)) {
+            $.ajax({
+                type: 'POST',
+                url: url,
+                data: {
+                    'day': day,
+                    'from_hour': from_hour,
+                    'to_hour': to_hour,
+                    'is_closed': is_closed,
+                    'csrfmiddlewaretoken': csrf_token
+                },
+                success: function (response) {
+                    if (response.status == 'success') {
+                        if (response.is_closed == 'Closed') {
+                            html = '<li class="li-hover" id="hour-' + response.id + '"><div class="open-close-time" style="padding-right:40px;"><div class="day-sec" style="width:200px; margin-left:40px; padding-right: 10px;"><span>' + response.day + '</span></div><div class="time-sec" style="width:300px; margin-right:50px; padding-left: 10px;"><span class="option-label" style="margin: 0 20px;">to</span></div><div class="close-time" style="padding-left: 10px !important;"><span style="color: #c52828; float: none; font-size: 13.97px; font-weight: 700; opacity: 1; padding: 0;">Closed</span></div><a href="#" class="remove-hour" data-url="/vendor/opening_hours/remove/' + response.id + '/"><i class="icon-delete"></i></a></div></li>'
+                        } else {
+                            html = '<li class="li-hover" id="hour-' + response.id + '"><div class="open-close-time opening-time" style="padding-right:40px;"><div class="day-sec" style="width:200px; margin-left:40px; padding-right: 10px;"><span>' + response.day + '</span></div><div class="time-sec" style="width:300px; margin-right:50px; padding-left: 10px;">' + response.from_hour + '<span class="option-label" style="margin: 0 20px;">to</span>' + response.to_hour + '</div><div class="close-time" style="padding-left: 10px !important;"><span style="color: #c52828; float: none; font-size: 13.97px; font-weight: 700; opacity: 1; padding: 0;">Closed</span></div><a href="#" class="remove-hour" data-url="/vendor/opening_hours/remove/' + response.id + '/"><i class="icon-delete"></i></a></div></li>'
+                        }
+                        $('.opening-hours').append(html);
+                        document.getElementById('opening-hours').reset();
+                    } else {
+                        swal(response.message, '', 'error')
+                    }
+                }
+            })
+        } else {
+            swal('Please fill all fields', '', 'info')
+        }
+    });
+
+    // Remove Business Hours
+    $('.remove-hour').on('click', function (e) {
+        e.preventDefault();
+        url = $(this).attr('data-url')
+
+        $.ajax({
+            type: 'GET',
+            url: url,
+            success: function (response) {
+                if (response.status == 'success') {
+                    document.getElementById('hour-' + response.id).remove();
+                }
+            }
+        })
+    })
 });

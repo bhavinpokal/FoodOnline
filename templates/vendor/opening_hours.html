@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+{% include 'includes/alerts.html' %}
+
+<!-- Main Section Start -->
+<div class="main-section">
+    <!-- Cover Image Start -->
+    {% include 'includes/vcover.html' %}
+    <!-- Cover Image End -->
+    <div class="page-section account-header buyer-logged-in">
+        <div class="container">
+            <div class="row">
+                <!-- Sidebar Start -->
+                {% include 'includes/v_sidebar.html' %}
+                <!-- Sidebar End -->
+                <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+                    <div class="user-dashboard loader-holder">
+                        <div class="user-holder">
+                            <div class="form-fields-set">
+                                <!-- Display Business Hours Start -->
+                                <ul>
+                                    <li>
+                                        <div class="row">
+                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                <div class="element-title">
+                                                    <h4>Opening Hours</h4>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                <div class="field-holder">
+                                                    <div class="time-list">
+                                                        <ul class="opening-hours">
+                                                            {% for hour in opening_hours %}
+                                                                <li class="li-hover" id="hour-{{ hour.id }}">
+                                                                    <div class="open-close-time {% if not hour.is_closed %}opening-time{% endif %}" style="padding-right:40px;">
+                                                                        <div class="day-sec" style="width:200px; margin-left:40px; padding-right: 10px;">
+                                                                            <span>{{ hour }}</span>
+                                                                        </div>
+                                                                        <div class="time-sec" style="width:300px; margin-right:50px; padding-left: 10px;">
+                                                                            {{ hour.from_hour }}
+                                                                            <span class="option-label" style="margin: 0 20px;">to</span>
+                                                                            {{ hour.to_hour }}
+                                                                        </div>
+                                                                        <div class="close-time" style="padding-left: 10px !important;">
+                                                                            <span style="color: #c52828; float: none; font-size: 13.97px; font-weight: 700; opacity: 1; padding: 0;">Closed</span>
+                                                                        </div>
+                                                                        <a href="#" class="remove-hour" data-url="{% url 'remove_opening_hours' hour.id %}"><i class="icon-delete"></i></a>
+                                                                    </div>
+                                                                </li>
+                                                            {% endfor %}
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <!-- Display Business Hours End -->
+                                <!-- Form to add business hours Start -->
+                                <div>
+                                    <form id="opening-hours" method="post">
+                                        {% csrf_token %}
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <div class="field-holder">
+                                                <div class="row">
+                                                    <div class="open-close-time">
+                                                        <div class="day-sec col-md-3" style="margin-right:0px;">
+                                                            <span>{{ form.day }}</span>
+                                                        </div>
+                                                        <div class="time-sec col-md-3" style="width: 140px; padding-left:0px; padding-right:0px; margin-left:27px;">
+                                                            {{ form.from_hour }}
+                                                        </div>
+                                                        <span class="option-label" style="margin-left:25px; margin-right:25px; padding:0; line-height: 42px; text-align: center;">to</span>
+                                                        <div class="time-sec col-md-3" style="width: 140px; padding-left:0px; padding-right:0px; margin-right:0px;">
+                                                            {{ form.to_hour }}
+                                                        </div>
+                                                        <div class="close-time col-md-3" style="margin-left:13px;">
+                                                            <span style="line-height: 42px;">{{ form.is_closed }}&nbsp;&nbsp;Set as closed</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="field-holder">
+                                            <div class="payment-holder input-button-loader">
+                                                <input type="hidden" id="add-hour-url" value="{% url 'add_opening_hours' %}">
+                                                <input class="update-restaurant add-hour" type="submit" value="Update Time">
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <!-- Form to add business hours End -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Main Section End -->
+
+{% endblock content %}
