@@ -1,0 +1,178 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<!-- Main Section Start -->
+<div class="main-section">
+    <!-- Cover Image Start -->
+    {% include 'includes/ccover.html' %}
+    <!-- Cover Image End -->
+    <div class="page-section account-header buyer-logged-in">
+        <div class="container">
+            <div class="row">
+                <!-- Sidebar Start -->
+                {% include 'includes/c_sidebar.html' %}
+                <!-- Sidebar End -->
+                <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+                    <div class="user-dashboard loader-holder">
+                        <div class="user-holder">
+                            <div class="user-profile">
+                                <div class="element-title has-border">
+                                    <h5>Account Settings</h5>
+                                </div>
+                                <div class="row">
+                                    <form id="publisher_profile" action="{% url 'cprofile' %}" method="POST" enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <div class="row">
+                                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                    <div class="user-profile-images">
+                                                        <div class="current-img">
+                                                            <div class="row mt">
+                                                                <div id="cropContainerModal" data-def-img="{% if profile.profile_picture %}{{ profile.profile_picture.url }}{% else %}{% static 'extra-images/team-medium-img1.jpg' %}{% endif %}" data-img-type="default">
+                                                                    <figure>
+                                                                        <a><img src="{% if profile.profile_picture %}{{ profile.profile_picture.url }}{% else %}{% static 'extra-images/team-medium-img1.jpg' %}{% endif %}" alt="Profile Image"></a>
+                                                                    </figure>
+                                                                </div>
+                                                            </div>
+                                                            <span></span>
+                                                        </div>
+                                                        <div class="upload-file">
+                                                            {{ profile_form.profile_picture }}
+                                                            <button type="button" id="upload_profile"><span>Upload Profile Picture</span></button>
+                                                        </div>
+                                                    </div>
+                                                    <label class="text-danger" style="margin-top:10px;">{{ profile_form.profile_picture.errors }}</label>
+                                                </div>
+                                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                    <div class="user-profile-images">
+                                                        <div class="current-img">
+                                                            <div class="row mt">
+                                                                <div id="cropContainerModal" data-def-img="{% if profile.cover_photo %}{{ profile.cover_photo.url }}{% else %}{% static 'extra-images/cover-photo01.jpg' %}{% endif %}" data-img-type="default">
+                                                                    <figure>
+                                                                        <a><img src="{% if profile.cover_photo %}{{ profile.cover_photo.url }}{% else %}{% static 'extra-images/cover-photo01.jpg' %}{% endif %}" alt="Cover Image"></a>
+                                                                    </figure>
+                                                                </div>
+                                                            </div>
+                                                            <span></span>
+                                                        </div>
+                                                        <div class="upload-file">
+                                                            {{ profile_form.cover_photo }}
+                                                            <button type="button" id="upload_cover"><span>Upload Cover Image</span></button>
+                                                        </div>
+                                                    </div>
+                                                    <label class="text-danger" style="margin-top:10px;">{{ profile_form.cover_photo.errors }}</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <div class="row">
+                                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                                    <div class="field-holder">
+                                                        <label for="id_first_name">First Name*</label>
+                                                        {{ user_form.first_name }}
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                                    <div class="field-holder">
+                                                        <label for="id_last_name">Last Name*</label>
+                                                        {{ user_form.last_name }}
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                                    <div class="field-holder">
+                                                        <label for="id_phone_number">Phone Number *</label>
+                                                        {{ user_form.phone_number }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <div class="opt-conts">
+                                                <div class="row">
+                                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                        <div class="field-holder">
+                                                            <label for="id_address">Address *</label>
+                                                            <div class="select-holder">
+                                                                {{ profile_form.address }}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                        <div class="field-holder">
+                                                            <label for="id_city">City</label>
+                                                            <div class="select-holder">
+                                                                {{ profile_form.city }}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                        <div class="field-holder">
+                                                            <label for="id_state">State</label>
+                                                            <div class="select-holder">
+                                                                {{ profile_form.state }}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                        <div class="field-holder">
+                                                            <label for="id_country">Country</label>
+                                                            {{ profile_form.country }}
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                        <div class="field-holder">
+                                                            <label for="id_pin_code">Pin Code</label>
+                                                            {{ profile_form.pin_code }}
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                        <div class="field-holder">
+                                                            <label for="id_latitude">Latitude</label>
+                                                            {{ profile_form.latitude }}
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                        <div class="field-holder">
+                                                            <label for="id_longitude">Longitude</label>
+                                                            {{ profile_form.longitude }}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <div class="field-holder">
+                                                <button name="button" type="submit" class="btn-submit">Update Profile</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Main Section End -->
+
+<script>
+    $(function profile(){
+        $("#upload_profile").on('click', function(e){
+            e.preventDefault();
+            $("#id_profile_picture").trigger('click');
+        });
+    });
+
+    $(function cover(){
+        $("#upload_cover").on('click', function(e){
+            e.preventDefault();
+            $("#id_cover_photo").trigger('click');
+        });
+    });
+</script>
+
+{% include 'includes/alerts.html' %}
+{% endblock content %}
