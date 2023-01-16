@@ -83,7 +83,11 @@
                                             </li>
                                         </ul>
                                     </div>
-                                    <div id="paypal-button-container"></div>
+                                    {% if order.payment_method == 'PayPal' %}
+                                        <div id="paypal-button-container"></div>
+                                    {% elif order.payment_method == 'RazorPay' %}
+                                        <h4>RazorPay</h4>
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>

@@ -1,0 +1,150 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<!-- Main Section Start -->
+<div class="main-section">
+    <!-- Cover Image Start -->
+    {% include 'includes/ccover.html' %}
+    <!-- Cover Image End -->
+    <div class="page-section account-header buyer-logged-in">
+        <div class="container">
+            <div class="row">
+                <!-- Sidebar Start -->
+                {% include 'includes/c_sidebar.html' %}
+                <!-- Sidebar End -->
+                <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+                    <div class="user-dashboard loader-holder">
+                        <div class="user-holder">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <div class="row">
+                                    <div class="element-title has-border right-filters-row">
+                                        <h5>Order Details</h5>
+                                    </div>
+                                </div>
+                                <div class="menu-order-detail order-detail" id="order_detail">
+                                    <div class="modal-dialog" style="width:100% !important; max-height:100% !important; margin-top:10px;">
+                                        <div class="modal-content" style="border:none; padding-top:0;">
+                                            <div class="modal-body">
+                                                <div class="order-detail-inner">
+                                                    <div class="description-holder">
+                                                        <div class="row">
+                                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                                <div class="list-detail-options has-checkbox">
+                                                                    <h3>Order Details </h3>
+                                                                    <ul class="order-detail-options">
+                                                                        <li class="order-number">
+                                                                            <strong>Order ID:</strong>
+                                                                            <span>{{ order.order_number }}</span>
+                                                                        </li>
+                                                                        <li class="req-delivery">
+                                                                            <strong>Transaction ID:</strong>
+                                                                            <span>{{ order.payment.transaction_id }}</span>
+                                                                        </li>
+                                                                        <li class="created-date">
+                                                                            <strong>Delivery Date:</strong>
+                                                                            <span>{{ order.created_at }}</span>
+                                                                        </li>
+                                                                        <li class="order-type">
+                                                                            <strong>Payment Method:</strong>
+                                                                            <span>{{ order.payment_method }}</span>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                                <div class="customer-detail-holder">
+                                                                    <h3>Customer Details</h3>
+                                                                    <ul class="customer-detail">
+                                                                        <li style="margin-bottom:0;">
+                                                                            <strong>Name :</strong>
+                                                                            <span>{{ user.first_name }}</span>
+                                                                        </li>
+                                                                        <li style="margin-bottom:0;">
+                                                                            <strong>Phone Number :</strong>
+                                                                            <span>{{ user.phone_number }}</span>
+                                                                        </li>
+                                                                        <li style="margin-bottom:0;">
+                                                                            <strong>Email :</strong>
+                                                                            <span>{{ user.email }}</span>
+                                                                        </li>
+                                                                        <li style="margin-bottom:0;">
+                                                                            <strong>Address :</strong>
+                                                                            <span>{{ order.address }}</span>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                <div class="order-status-holder">
+                                                                    <div class="order-status-process order-status">
+                                                                        <p style="background:#047a06;">Your order is completed </p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                <h2 class="heading">Food Menu</h2>
+                                                                <div class="responsive-table">
+                                                                    <ul class="categories-order table-generic">
+                                                                        <li class="order-heading-titles">
+                                                                            <div>Products</div>
+                                                                            <div>Price per</div>
+                                                                        </li>
+                                                                        {% for item in order_food %}
+                                                                            <li class="order-heading-titles">
+                                                                                <div>
+                                                                                    <h4>{{ item.fooditem }}</h4>
+                                                                                    <h5>{{ item.fooditem.description }}</h5>
+                                                                                </div>
+                                                                                <div><span class="category-price">₹{{ item.fooditem.price }}</span></div>
+                                                                            </li>
+                                                                        {% endfor %}
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                <div class="row">
+                                                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                                                        <h3>Order Total</h3>
+                                                                    </div>
+                                                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                                                        <ul class="order-detail-options order-total">
+                                                                            <li class="created-date">
+                                                                                <strong>Subtotal:</strong>
+                                                                                <span>₹{{ subtotal }}</span>
+                                                                            </li>
+                                                                            {% for key,value in tax_data.items %}
+                                                                                {% for i,j in value.items %}
+                                                                                    <li class="order-type">
+                                                                                        <strong>{{ key }} <small>({{ i }}%)</small></strong>
+                                                                                        <span>₹{{ j }}</span>
+                                                                                    </li>
+                                                                                {% endfor %}
+                                                                            {% endfor %}
+                                                                            <li class="order-type total-price">
+                                                                                <strong>Total:</strong>
+                                                                                <span>₹{{ order.total }}</span>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Main Section End -->
+
+{% include 'includes/alerts.html' %}
+{% endblock content %}

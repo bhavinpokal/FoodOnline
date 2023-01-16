@@ -9,6 +9,7 @@ from django.template.defaultfilters import slugify
 from accounts.forms import UserForm
 from accounts.models import User, UserProfile
 from accounts.utils import detectUser, send_verification_email
+from orders.models import Order
 from vendor.forms import VendorForm
 from vendor.models import Vendor
 
@@ -168,7 +169,13 @@ def myAccount(request):
 @login_required(login_url='login')
 @user_passes_test(check_role_customer)
 def custDashboard(request):
-    return render(request, 'accounts/custDashboard.html')
+    orders = Order.objects.filter(
+        user=request.user, is_ordered=True).order_by('-created_at')
+    context = {
+        'orders': orders[:5],
+        'total_orders': orders.count(),
+    }
+    return render(request, 'accounts/custDashboard.html', context)
 
 
 @login_required(login_url='login')
