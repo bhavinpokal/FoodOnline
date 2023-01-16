@@ -23,3 +23,53 @@
 .main-search.fancy .field-holder input[type="text"]{
     color: #000 !important;
 }
+
+/* .payment-method [type=radio]{
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.payment-method [type=radio] + img{
+    cursor: pointer;
+    padding: 5px;
+}
+
+.payment-method [type=radio]:checked + img{
+    outline: 2px solid #C33332 !important;
+} */
+
+.payment-method input{
+    margin:0 !important;padding:0 !important;
+    -webkit-appearance:none !important;
+       -moz-appearance:none !important;
+            appearance:none !important;
+}
+.paypal{background-image:url(paypal.png);}
+.razorpay{background-image:url(razorpay.png);}
+
+.payment-method input:active +.drinkcard-cc{opacity: .9 !important;}
+.payment-method input:checked +.drinkcard-cc{
+    -webkit-filter: none !important;
+       -moz-filter: none !important;
+            filter: none !important;
+}
+.drinkcard-cc{
+    cursor:pointer;
+    background-size:contain !important;
+    background-repeat:no-repeat !important;
+    display:inline-block !important;
+    width:100% !important;height:22px !important;
+    -webkit-transition: all 100ms ease-in !important;
+       -moz-transition: all 100ms ease-in !important;
+            transition: all 100ms ease-in !important;
+    -webkit-filter: brightness(1.8) grayscale(1) opacity(.7) !important;
+       -moz-filter: brightness(1.8) grayscale(1) opacity(.7) !important;
+            filter: brightness(1.8) grayscale(1) opacity(.7) !important;
+}
+.drinkcard-cc:hover{
+    -webkit-filter: brightness(1.2) grayscale(.5) opacity(.9) !important;
+       -moz-filter: brightness(1.2) grayscale(.5) opacity(.9) !important;
+            filter: brightness(1.2) grayscale(.5) opacity(.9) !important;
+}

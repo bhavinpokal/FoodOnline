@@ -1,0 +1,175 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<!-- Main Section Start -->
+<div class="main-section" style="padding-top:50px;">
+    <div class="page-section">
+        <div class="container">
+            <div class="row">
+                <form action="{% url 'place_order' %}" method="post">
+                    {% csrf_token %}
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12"><!-- Cart Items -->
+                        <div class="tabs-holder horizontal">
+                            <ul class="stickynav-tabs nav nav-tabs">
+                                <li class="active"><a data-toggle="tab" href="#home"><i class="icon icon-cart3"></i>Billing Address</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div id="home" class="tab-pane fade in active">
+                                    <div class="menu-itam-holder">
+                                        <div id="menu-item-list-6272" class="menu-itam-list">
+                                            <div class="row">
+                                                <ul>
+                                                    <li>
+                                                        <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12" style="margin-top:5px;">    
+                                                            <label for="id_first_name">First Name</label>{{ form.first_name }}
+                                                        </div>
+                                                        <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12" style="margin-top:5px;">    
+                                                            <label for="id_last_name">Last Name</label>{{ form.last_name }}
+                                                        </div>
+                                                        <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12" style="margin-top:10px;">    
+                                                            <label for="id_phone">Phone Number</label>{{ form.phone }}
+                                                        </div>
+                                                        <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12" style="margin-top:10px;">    
+                                                            <label for="id_email">Email</label>{{ form.email }}
+                                                        </div>
+                                                        <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-top:10px;">    
+                                                            <label for="id_address">Address</label>{{ form.address }}
+                                                        </div>
+                                                        <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12" style="margin-top:10px;">    
+                                                            <label for="id_country">Country</label>{{ form.country }}
+                                                        </div>
+                                                        <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12" style="margin-top:10px;">    
+                                                            <label for="id_state">State</label>{{ form.state }}
+                                                        </div>
+                                                        <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12" style="margin-top:10px;">    
+                                                            <label for="id_city">City</label>{{ form.city }}
+                                                        </div>
+                                                        <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12" style="margin-top:10px;">    
+                                                            <label for="id_pin_code">Pin Code</label>{{ form.pin_code }}
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12"><!-- Your Orders -->
+                        <div class="tabs-holder horizontal">
+                            <ul class="stickynav-tabs nav nav-tabs">
+                                <li class="active"><a data-toggle="tab" href="#home"><i class="icon icon-room_service"></i>Your order</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div id="home" class="tab-pane fade in active">
+                                    <div class="menu-itam-holder">
+                                        <div id="menu-item-list-6272" class="menu-itam-list">
+                                            <ul>
+                                                {% for item in cart_items %}
+                                                    <li id="cart-item-{{ item.id }}" style="padding:15px 0;">
+                                                        <div class="image-holder"><img src="{{ item.fooditem.image.url }}" alt="Food Image" style="max-height:100%;"></div>
+                                                        <div class="text-holder">
+                                                            <h6>{{ item.fooditem }}</h6>
+                                                            <span style="margin-right:120px;">{{ item.fooditem.description }}</span>
+                                                            <a href="{% url 'vendor_detail' item.fooditem.vendor.vendor_slug %}" class="badge badge-warning">{{ item.fooditem.vendor }}</a>
+                                                        </div>
+                                                        <div class="price-holder">
+                                                            <label id="qty-{{ item.fooditem.id }}" style="margin:0 15px;">{{ item.quantity }} QTY</label>
+                                                            <span class="price">₹{{ item.fooditem.price }}</span>
+                                                        </div>
+                                                    </li>
+                                                {% endfor %}
+                                            </ul>   
+                                        </div>
+                                        <div>
+                                            <ul>
+                                                <li style="list-style-type:none;">
+                                                    Subtotal
+                                                    <span class="price" style="float:right;">
+                                                        <span class="currency">₹</span>
+                                                        <span id="subtotal">{{ subtotal }}</span>
+                                                    </span>
+                                                </li>
+                                                {% for key,value in tax_dict.items %}
+                                                    {% for i,j in value.items %}
+                                                        <li style="list-style-type:none;">
+                                                            {{ key }} <small>({{ i }}%)</small>
+                                                            <span class="price" style="float:right;">
+                                                                <span class="currency">₹</span>
+                                                                <span id="tax-{{ key }}">{{ j }}</span>
+                                                            </span>
+                                                        </li>
+                                                    {% endfor %}
+                                                {% endfor %}
+                                                <li style="list-style-type:none; font-weight:600;">
+                                                    TOTAL
+                                                    <span class="price"  style="float:right;">
+                                                        <span class="currency">₹</span>
+                                                        <span id="total">{{ grand_total }}</span>
+                                                    </span>
+                                                </li>
+                                                <li style="list-style-type:none;">
+                                                    <div class="row">
+                                                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                                                            <div class="payment-method">
+                                                                <input type="radio" id="paypal" name="payment_method" value="PayPal">
+                                                                <label class="drinkcard-cc paypal" for="paypal"></label>
+                                                                <!--<img src="{% static 'extra-images/paypal.png' %}" alt="PayPal"width="100;">-->
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                                                            <div class="payment-method">
+                                                                <input type="radio" id="razorpay" name="payment_method" value="RazorPay">
+                                                                <label class="drinkcard-cc razorpay"for="razorpay"></label>
+                                                                <!--<img src="{% static 'extra-images/razorpay.png' %}" alt="RazorPay" width="100;">-->
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <span class="text-danger" id="payment-method-error"></span>
+                                                <li style="list-style-type:none;">
+                                                    <div class="row">
+                                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                            <div class="payment-holder">
+                                                                <input type="submit" onclick="return payMethodConfirm();" value="Place Order" id="btn-next-restaurant-information" class="bgcolor">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Main Section End -->
+
+<script>
+    function payMethodConfirm () {
+        var payMethod = $('input[name="payment_method"]:checked').val()
+        if (!payMethod) {
+            $('#payment-method-error').html("Select any one payment method");
+            return false;
+        } else {
+            var conf = confirm("You have selected " + payMethod + " as your preferred method")
+            if (conf == true) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+    $('input[name=payment_method]').on('change', function () {
+        $('#payment-method-error').html("");
+    })
+</script>
+
+{% endblock content %}
