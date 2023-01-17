@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<!-- Main Section Start -->
+<div class="main-section">
+    <!-- Cover Image Start -->
+    {% include 'includes/vcover.html' %}
+    <!-- Cover Image End -->
+    <div class="page-section account-header buyer-logged-in">
+        <div class="container">
+            <div class="row">
+                <!-- Sidebar Start -->
+                {% include 'includes/v_sidebar.html' %}
+                <!-- Sidebar End -->
+                <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+                    <div class="user-dashboard loader-holder">
+                        <div class="user-holder">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <div class="row">
+                                    <div class="element-title has-border right-filters-row">
+                                        <h5>ORDERS</h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <div class="user-orders-list">
+                                        <div class="responsive-table">
+                                            <ul class="table-generic">
+                                                <li class="order-heading-titles">
+                                                    <div>Order id</div>
+                                                    <div>Date</div>
+                                                    <div>Total Price</div>
+                                                    <div>Status</div>
+                                                    <div>Detail</div>
+                                                </li>
+                                                {% for order in orders %}
+                                                    <li class="order-heading-titles">
+                                                        <div><a href="{% url 'vendor_order_detail' order.order_number %}">{{ order.order_number }}</a></div>
+                                                        <div>{{ order.created_at }}</div>
+                                                        <div>₹ {{ order.get_total_by_vendor.grand_total }}</div>
+                                                        <div><span class="order-status" style="background-color: #047a06;">{{ order.status }}</span></div>
+                                                        <div><a href="{% url 'vendor_order_detail' order.order_number %}"><i class="icon-plus2 text-color"></i></a></div>
+                                                    </li>
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <ul class="pagination">
+                                <li class="active"><a>1</a></li>
+                                <li><a href="#">2</a></li>
+                                <li><a href="#">3</a></li>
+                                <li><span class="page-numbers dots">…</span></li>
+                                <li><a href="#">5</a></li>
+                                <li><a href="#">Next </a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Main Section End -->
+
+{% include 'includes/alerts.html' %}
+{% endblock content %}

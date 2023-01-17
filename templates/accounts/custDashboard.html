@@ -54,14 +54,14 @@
                                                     <div>Status</div>
                                                     <div>Detail</div>
                                                 </li>
-                                                {% for order in orders %}
-                                                <li class="order-heading-titles">
-                                                    <div><a href="{% url 'order_detail' order.order_number %}">{{ order.order_number }}</a></div>
-                                                    <div>{{ order.created_at }}</div>
-                                                    <div>₹ {{ order.total }}</div>
-                                                    <div><span class="order-status" style="background-color: #047a06;">{{ order.status }}</span></div>
-                                                    <div><a href="{% url 'order_detail' order.order_number %}"><i class="icon-plus2 text-color"></i></a></div>
-                                                </li>
+                                                {% for order in recent_orders %}
+                                                    <li class="order-heading-titles">
+                                                        <div><a href="{% url 'order_detail' order.order_number %}">{{ order.order_number }}</a></div>
+                                                        <div>{{ order.created_at }}</div>
+                                                        <div>₹ {{ order.total }}</div>
+                                                        <div><span class="order-status" style="background-color: #047a06;">{{ order.status }}</span></div>
+                                                        <div><a href="{% url 'order_detail' order.order_number %}"><i class="icon-plus2 text-color"></i></a></div>
+                                                    </li>
                                                 {% endfor %}
                                             </ul>
                                         </div>
