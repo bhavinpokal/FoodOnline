@@ -6,8 +6,7 @@
 <div class="main-section">
   <!-- Home Pages Elements Strat -->
   <!-- Main Search Start -->
-  <div class="page-section nopadding cs-nomargin"
-    style="padding-top: 200px; padding-bottom: 150px; margin-bottom: 0px; background: url({% static 'extra-images/bg-image1.jpg' %}) no-repeat center /cover;">
+  <div class="page-section nopadding cs-nomargin main-search-bar" style="padding-top: 200px; padding-bottom: 150px; margin-bottom: 0px; background: url({% static 'extra-images/bg-image1.jpg' %}) no-repeat center /cover;">
     <div class="container">
       <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -16,8 +15,7 @@
               We are in the business of food<br />our restaurants do
             </h1>
             <p style="font-size: 18px; letter-spacing: 1px; color: #505050; text-align: center;">
-              Ridiculus sociosqu cursus neque cursus curae ante scelerisque
-              vehicula.
+              Ridiculus sociosqu cursus neque cursus curae ante scelerisque vehicula.
             </p>
           </div>
         </div>
@@ -239,9 +237,9 @@
                 <li class="has-border">
                   <figure>
                     {% if vendor.user_profile.profile_picture %}
-                    <a href="{% url 'vendor_detail' vendor.vendor_slug %}"><img src="{{ vendor.user_profile.profile_picture.url }}" class="attachment-full size-full wp-post-image" alt="" /></a>
+                    <a href="{% url 'vendor_detail' vendor.vendor_slug %}"><img src="{{ vendor.user_profile.profile_picture.url }}" class="attachment-full size-full wp-post-image" height="125" alt="Restaurant Logo" /></a>
                     {% else %}
-                      <a href="{% url 'vendor_detail' vendor.vendor_slug %}"><img src="{% static 'extra-images/listing-logo18.png' %}" class="attachment-full size-full wp-post-image" alt="" /></a>
+                      <a href="{% url 'vendor_detail' vendor.vendor_slug %}"><img src="{% static 'extra-images/listing-logo18.png' %}" class="attachment-full size-full wp-post-image" height="125" alt="Restaurant Logo" /></a>
                     {% endif %}
                   </figure>
                 </li>
