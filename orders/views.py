@@ -2,6 +2,7 @@ import simplejson as json
 from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+from django.contrib.sites.shortcuts import get_current_site
 
 from accounts.utils import send_notification
 from marketplace.models import Cart, Tax
@@ -9,7 +10,7 @@ from marketplace.context_processors import get_cart_amount
 from menu.models import FoodItem
 from orders.forms import OrderForm
 from orders.models import Order, OrderFood, Payment
-from orders.utils import generate_order_number
+from orders.utils import generate_order_number, order_total_by_vendor
 
 
 @login_required(login_url='login')
@@ -123,10 +124,19 @@ def payments(request):
         # Send Order Confirmation Email to customer
         mail_subject = 'Order confirmed'
         mail_template = 'orders/order_confirmation_email.html'
+        order_food = OrderFood.objects.filter(order=order)
+        customer_subtotal = 0
+        for item in order_food:
+            customer_subtotal += (item.price * item.quantity)
+        tax_data = json.loads(order.tax_data)
         context = {
             'user': request.user,
             'order': order,
             'to_email': order.email,
+            'order_food': order_food,
+            'domain': get_current_site(request),
+            'customer_subtotal': customer_subtotal,
+            'tax_data': tax_data,
         }
         # send_notification(mail_subject, mail_template, context)
 
@@ -138,11 +148,18 @@ def payments(request):
             if i.fooditem.vendor.user.email not in to_emails:
                 to_emails.append(i.fooditem.vendor.user.email)
 
-        context = {
-            'order': order,
-            'to_email': to_emails,
-        }
-        # send_notification(mail_subject, mail_template, context)
+                order_food_to_vendor = OrderFood.objects.filter(
+                    order=order, fooditem__vendor=i.fooditem.vendor)
+
+                context = {
+                    'order': order,
+                    'to_email': i.fooditem.vendor.user.email,
+                    'order_food_to_vendor': order_food_to_vendor,
+                    'vendor_subtotal': order_total_by_vendor(order, i.fooditem.vendor.id)['subtotal'],
+                    'tax_data': order_total_by_vendor(order, i.fooditem.vendor.id)['tax_dict'],
+                    'vendor_grand_total': order_total_by_vendor(order, i.fooditem.vendor.id)['grand_total'],
+                }
+                # send_notification(mail_subject, mail_template, context)
 
         # Clear cart
         cart_items.delete()
